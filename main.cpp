@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     // Reconstruire a, à partir des pixels de B
     Image<uchar> a = loadImage("../a.png");
 
-
+	//hi
 
     CImg<uchar> imga = toCImg(a);
     CImgDisplay aDisp(imga, "a.png");
