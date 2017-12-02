@@ -2,12 +2,14 @@ project (Final)
 
 cmake_minimum_required (VERSION 3.0.2)
 
-set(CMAKE_CXX_STANDARD 98)
+set(CMAKE_CXX_STANDARD 11)
 
 set(SRCS
         main.cpp
+		imdisplay.cpp
 
-	Image.h
+		imdisplay.h
+		Image.h
         stb_image.h
         CImg.h)
 

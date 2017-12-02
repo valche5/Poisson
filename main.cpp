@@ -1,14 +1,9 @@
 #include <iostream>
-#include <string>
-#include <cstdlib>
-#include <limits>
 
 #include "Image.h"
-#include "CImg.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-
-using namespace cimg_library;
+#include "imdisplay.h"
 
 Image<uchar> loadImage(const std::string &filename) {
     int width, height, n;
@@ -18,27 +13,19 @@ Image<uchar> loadImage(const std::string &filename) {
     return img;
 }
 
-template <typename T>
-CImg<T> toCImg(Image<T> &img) {
-    CImg<T> cimg(img.data, img.channels, img.dataCols, img.dataRows);
-    cimg.permute_axes("YZCX");
-    return cimg;
-}
 
 int main(int argc, char* argv[]) {
     // Reconstruire a, à partir des pixels de B
     Image<uchar> a = loadImage("../a.png");
 
-	//hi
+    imShow(a, "imga");
+    imShow(a, "imgb");
 
-    CImg<uchar> imga = toCImg(a);
-    CImgDisplay aDisp(imga, "a.png");
+    std::cout << "Hello !" << std::endl;
 
-    aDisp.show();
+    waitImClosed();
 
-    while(!aDisp.is_closed()) {
-        aDisp.wait();
-    }
+    std::cout << "Ended !" << std::endl;
 
     return 0;
 }
