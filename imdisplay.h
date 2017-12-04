@@ -2,9 +2,9 @@
 #define IMDISPLAY_H
 
 #include <string>
-#include "Image.h"
+#include "EigenImage.h"
 
-void imShow(const Image<uchar> &img, const std::string &name = "");
+void imShow(const EigenImage &img, const std::string &name = "");
 
 void waitImClosed();
 

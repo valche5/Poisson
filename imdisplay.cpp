@@ -6,8 +6,8 @@ using namespace cimg_library;
 
 static std::vector<CImgDisplay> displays;
 
-void imShow(const Image<uchar> &img, const std::string &name) {
-    CImg<uchar> cimg(img.data, img.channels, img.dataCols, img.dataRows);
+void imShow(const EigenImage &img, const std::string &name) {
+    CImg<unsigned char> cimg(img.data(), img.channels(), img.rows(), img.cols());
     cimg.permute_axes("YZCX");
 
     displays.emplace_back(cimg, name.c_str());

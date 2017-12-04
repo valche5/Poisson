@@ -21,7 +21,7 @@ set(SRCS
 		imdisplay.h
 		Image.h
         stb_image.h
-        CImg.h)
+        CImg.h EigenImage.cpp EigenImage.h stb_image_write.h SeamlessCloning.cpp SeamlessCloning.h)
 
 find_package(Threads REQUIRED)
 find_package(X11 REQUIRED)
