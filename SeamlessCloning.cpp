@@ -145,13 +145,13 @@ void SeamlessCloning::test() {
     std::cout << "Result : " << std::endl << result.round().cast<int>() << std::endl;
 }
 
-EigenImage SeamlessCloning::compute(const EigenImage &mask, const EigenImage &source, const EigenImage &target) {
+EigenImage SeamlessCloning::compute(const EigenImage &mask, const EigenImage &source, const EigenImage &target, bool mixingGradients) {
     // Usefull constants
     const int rows = mask.rows();
     const int cols = mask.cols();
     const int channels = target.channels();
 
-    /* 1 : Assign an ID to all selected pixels */
+    /* 1 : a Map is used Assign an ID to all selected pixels (in mask) */
     ArrayXXi map = ArrayXXi::Constant(rows, cols, -1);
 
     // # of selected pixels
@@ -177,9 +177,40 @@ EigenImage SeamlessCloning::compute(const EigenImage &mask, const EigenImage &so
 
     /* 2 : Create matrices A and B to solve Ax=B */
     MatrixXf B(pixelCount, channels);
-
     SparseMatrix<float> A(pixelCount,pixelCount);
     A.reserve(VectorXi::Constant(pixelCount,5));
+
+    // Function for gradient calculations (mixed gradient or not)
+    std::function<float(const EigenImage &, const EigenImage &, int, int, int)> grad;
+    if (mixingGradients) {
+        // Mixing gradient
+        grad = [](const EigenImage &source, const EigenImage &target, int row, int col, int c) -> float {
+            float v = 0;
+            float fp = target(row, col, c), gp = source(row, col, c);
+            float fq, gq;
+
+            // Left
+            fq = target(row - 1, col, c), gq = source(row - 1, col, c);
+            v += (std::abs(fp - fq) > std::abs(gp - gq)) ? fp - fq : gp - gq;
+            // Right
+            fq = target(row + 1, col, c); gq = source(row + 1, col, c);
+            v += (std::abs(fp - fq) > std::abs(gp - gq)) ? fp - fq : gp - gq;
+            // Top
+            fq = target(row, col - 1, c); gq = source(row, col - 1, c);
+            v += (std::abs(fp - fq) > std::abs(gp - gq)) ? fp - fq : gp - gq;
+            // Bottom
+            fq = target(row, col + 1, c); gq = source(row, col + 1, c);
+            v += (std::abs(fp - fq) > std::abs(gp - gq)) ? fp - fq : gp - gq;
+
+            return v;
+        };
+    } else {
+        // Simple gradient
+        grad = [](const EigenImage &source, const EigenImage &target, int row, int col, int c) -> float {
+            return 4 * source(row, col, c) - source(row - 1, col, c) - source(row + 1, col, c)
+                   - source(row, col - 1, c) - source(row, col + 1, c);
+        };
+    }
 
     for (int col = minCol; col <= maxCol; col++) {
         for (int row = minRow; row <= maxRow; row++) {
@@ -188,8 +219,7 @@ EigenImage SeamlessCloning::compute(const EigenImage &mask, const EigenImage &so
 
                 // Fill B with source image gradients
                 for (int c = 0; c < channels; c++) {
-                    B(id, c) = 4 * source(row, col, c) - source(row - 1, col, c) - source(row + 1, col, c)
-                            - source(row, col - 1, c) - source(row, col + 1, c);
+                    B(id, c) = grad(source, target, row, col, c);
                 }
 
                 // Fill A, fill B with border values
