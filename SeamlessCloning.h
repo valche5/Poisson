@@ -6,8 +6,6 @@
 
 class SeamlessCloning {
 public:
-    void test();
-
     EigenImage compute(const EigenImage &mask, const EigenImage &source, const EigenImage &target, bool mixingGradients = false);
 };
 
