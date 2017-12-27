@@ -8,23 +8,15 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include_directories(Eigen)
 
-find_package(OpenMP)
-if (OPENMP_FOUND)
-	set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-endif()
-
 set(SRCS
         main.cpp
-		imdisplay.cpp
+		EigenImage.cpp
+		SeamlessCloning.cpp
 
-		imdisplay.h
-		Image.h
         stb_image.h
-        CImg.h EigenImage.cpp EigenImage.h stb_image_write.h SeamlessCloning.cpp SeamlessCloning.h)
-
-find_package(Threads REQUIRED)
-find_package(X11 REQUIRED)
+		EigenImage.h
+		SeamlessCloning.h
+		stb_image_write.h)
 
 add_executable(final ${SRCS})
 target_link_libraries (final ${CMAKE_THREAD_LIBS_INIT} ${X11_LIBRARIES})

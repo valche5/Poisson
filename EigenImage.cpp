@@ -20,7 +20,9 @@ bool EigenImage::load(const std::string &filename) {
     if (data) {
         _data.assign(data, data + (_rows * _cols * _channels));
         stbi_image_free(data);
+        return true;
     }
+    return false;
 }
 
 bool EigenImage::write(const std::string &filename) {

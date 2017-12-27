@@ -4,10 +4,6 @@
 #include "EigenImage.h"
 #include "Eigen/Sparse"
 
-class SeamlessCloning {
-public:
-    EigenImage compute(const EigenImage &mask, const EigenImage &source, const EigenImage &target, bool mixingGradients = false);
-};
-
+extern EigenImage clone(const EigenImage &mask, const EigenImage &source, const EigenImage &target, bool mixingGradients = false);
 
 #endif //FINAL_SEAMLESSCLONING_H

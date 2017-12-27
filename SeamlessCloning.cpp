@@ -7,7 +7,7 @@
 
 using namespace Eigen;
 
-EigenImage SeamlessCloning::compute(const EigenImage &mask, const EigenImage &source, const EigenImage &target, bool mixingGradients) {
+EigenImage clone(const EigenImage &mask, const EigenImage &source, const EigenImage &target, bool mixingGradients) {
     // Usefull constants
     const int rows = mask.rows();
     const int cols = mask.cols();
@@ -122,8 +122,8 @@ EigenImage SeamlessCloning::compute(const EigenImage &mask, const EigenImage &so
         std::cout << "Solving failed" << std::endl;
     }
 
+    /* 4 : Compose result Image */
     x = x.array().round();
-
     EigenImage result(rows, cols, channels);
     for (int col = 0; col < cols; col++) {
         for (int row = 0; row < rows; row++) {
