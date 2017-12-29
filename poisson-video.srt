@@ -1,0 +1,44 @@
+1
+00:00:43,210 --> 00:00:46,210
+WE COMPILE AND SEE THE NAME OF EXECUTABLE 
+
+2
+00:01:35,718 --> 00:01:40,312
+For using the console in windows is neccessary to go to the command prompt of visual basic
+
+3
+00:01:51,031 --> 00:01:55,954
+After that, we access to the compile directory and verify that the executable is there
+
+4
+00:02:19,491 --> 00:02:24,711
+The program wait for a directory with 3 files named mask, source, and target
+
+5
+00:02:27,439 --> 00:02:30,439
+The mask show in white the portion of image source that will use
+
+6
+00:02:33,881 --> 00:02:49,901
+here we verify that images has the same size
+
+7
+00:02:57,795 --> 00:03:07,075
+Program wait for the directory with the files image source, target and mask and the name of the result image
+
+8
+00:03:14,786 --> 00:03:22,006
+If i would like to use the mixed gradient, is neccesary to write the parameter -m before of the directory parameter
+
+9
+00:03:36,396 --> 00:03:39,396
+Here is the result  of mixed gradient compare  with the normal gradient
+
+10
+00:03:42,206 --> 00:03:47,288
+Look that the normal gradient is more evident the mask that i used in the final result
+
+11
+00:03:51,199 --> 00:03:54,199
+MERCI, GRACIAS, THANK YOU
+
